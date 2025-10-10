@@ -1,7 +1,6 @@
 ---
 - name: Deploy Scientific Calculator Application
   hosts: deployment_servers
-  become: yes
   vars:
     docker_image: "scientific-calculator-java"
     container_name: "scientific-calculator"
