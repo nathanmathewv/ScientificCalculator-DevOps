@@ -19,17 +19,15 @@
       ignore_errors: yes
 
     - name: Pull latest Docker image
-        community.docker.docker_image:
-          name: nathanmathewv/scientific-calculator-java
-          tag: "{{ lookup('env', 'IMAGE_TAG') }}"
-          source: local
-
-
+      community.docker.docker_image:
+        name: nathanmathewv/scientific-calculator-java
+        tag: "{{ lookup('env', 'IMAGE_TAG') }}"
+        source: local
 
     - name: Run new container
       docker_container:
         name: "{{ container_name }}"
-        image: "{{ docker_image }}:{{ lookup('env', 'BUILD_ID') | default('latest', true) }}"
+        image: "{{ docker_image }}:{{ lookup('env', 'IMAGE_TAG') | default('latest', true) }}"
         state: started
         restart_policy: always
         ports:
