@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKERHUB_REPO = "scientific-calculator-java"
+        DOCKERHUB_REPO = "nathanmathewv/scientific-calculator-java" // fix: add your username
         IMAGE_TAG = "${env.BUILD_ID}"
         PATH = "/usr/local/bin:/opt/homebrew/bin:${env.PATH}"
     }
