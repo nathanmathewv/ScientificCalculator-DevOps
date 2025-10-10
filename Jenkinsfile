@@ -1,13 +1,13 @@
 pipeline {
     agent any
-    
+
     environment {
         DOCKER_CREDENTIALS_ID = 'docker-user'
         DOCKER_IMAGE_JAVA = 'scientific-calculator-java'
         MAVEN_HOME = tool 'Maven'
         JAVA_HOME = tool 'JDK-17'
     }
-    
+
     stages {
         stage('Checkout') {
             steps {
@@ -15,7 +15,7 @@ pipeline {
                 checkout scm
             }
         }
-        
+
         stage('Build Java Application') {
             agent {
                 docker {
@@ -33,7 +33,7 @@ pipeline {
                 }
             }
         }
-        
+
         stage('Test Java Application') {
             agent {
                 docker {
@@ -53,7 +53,7 @@ pipeline {
                 }
             }
         }
-        
+
         stage('Code Coverage') {
             agent {
                 docker {
@@ -79,7 +79,7 @@ pipeline {
                 }
             }
         }
-        
+
         stage('Package Java Application') {
             agent {
                 docker {
@@ -98,56 +98,58 @@ pipeline {
                 }
             }
         }
-        
+
         stage('Build Docker Image') {
+            agent any
             steps {
                 script {
                     echo 'Building Docker image for Java application...'
                     dir('java-calculator') {
-                        docker.build("${DOCKER_IMAGE_JAVA}:${BUILD_NUMBER}")
-                        docker.build("${DOCKER_IMAGE_JAVA}:latest")
+                        sh "docker build -t ${DOCKER_IMAGE_JAVA}:${BUILD_NUMBER} ."
+                        sh "docker tag ${DOCKER_IMAGE_JAVA}:${BUILD_NUMBER} ${DOCKER_IMAGE_JAVA}:latest"
                     }
                 }
             }
         }
-        
+
         stage('Push Docker Image') {
+            agent any
             steps {
                 script {
                     echo 'Pushing Docker image to registry...'
                     docker.withRegistry('https://registry.hub.docker.com', DOCKER_CREDENTIALS_ID) {
-                        docker.image("${DOCKER_IMAGE_JAVA}:${BUILD_NUMBER}").push()
-                        docker.image("${DOCKER_IMAGE_JAVA}:latest").push()
+                        sh "docker push ${DOCKER_IMAGE_JAVA}:${BUILD_NUMBER}"
+                        sh "docker push ${DOCKER_IMAGE_JAVA}:latest"
                     }
                 }
             }
         }
-        
+
         stage('Deploy') {
             steps {
-                echo 'Deployment stage - Configure based on your deployment strategy'
+                echo 'Deployment stage - configure based on your strategy'
                 echo "Java Application: ${DOCKER_IMAGE_JAVA}:${BUILD_NUMBER}"
-                echo 'Docker run command: docker run -d -p 8080:8080 ${DOCKER_IMAGE_JAVA}:${BUILD_NUMBER}'
+                echo "Run using: docker run -d -p 8080:8080 ${DOCKER_IMAGE_JAVA}:${BUILD_NUMBER}"
             }
         }
     }
-    
+
     post {
         always {
-            echo 'Pipeline execution completed'
+            echo 'Cleaning workspace...'
             cleanWs()
         }
         success {
             echo 'Pipeline executed successfully!'
-            mail to: 'your-email@example.com',
+            mail to: 'nathanmathewv@gmail.com',
                  subject: "SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
                  body: "Build Status: SUCCESS\nJob: ${env.JOB_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nBuild URL: ${env.BUILD_URL}"
         }
         failure {
             echo 'Pipeline execution failed!'
-            mail to: 'your-email@example.com',
+            mail to: 'nathanmathewv@gmail.com',
                  subject: "FAILURE: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
-                 body: "Build Status: FAILURE\nJob: ${env.JOB_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nBuild URL: ${env.BUILD_URL}\nPlease check the console output for details."
+                 body: "Build Status: FAILURE\nJob: ${env.JOB_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nBuild URL: ${env.BUILD_URL}\nCheck console output for details."
         }
     }
 }
