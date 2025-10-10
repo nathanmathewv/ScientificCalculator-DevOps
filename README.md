@@ -185,14 +185,6 @@ The deployment playbook:
 | `mvn jacoco:report` | Generate code coverage report |
 | `mvn surefire-report:report` | Generate test report |
 
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
-
 ## License
 
 This project is for educational purposes as part of CSE 816 SPE coursework.
