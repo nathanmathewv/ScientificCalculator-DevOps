@@ -4,6 +4,7 @@ pipeline {
     environment {
         DOCKERHUB_REPO = "scientific-calculator-java"
         IMAGE_TAG = "${env.BUILD_ID}"
+        PATH = "/opt/homebrew/bin:${env.PATH}"
     }
 
     stages {
