@@ -4,6 +4,10 @@ pipeline {
         DOCKERHUB_REPO = "scientific-calculator-java"
         IMAGE_TAG = "${env.BUILD_ID}"
     }
+    tools {
+        maven 'Maven 3.9'
+    }
+
     stages {
         stage('Checkout') {
             steps { 
