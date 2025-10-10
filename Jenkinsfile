@@ -42,9 +42,11 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                sh 'ansible-playbook -i ansible/inventory.ini ansible/deploy.yml'
+                withEnv(["IMAGE_TAG=${env.BUILD_ID}"]) {
+                    sh 'ansible-playbook -i ansible/inventory.ini ansible/deploy.yml'
+                }
             }
-        }
+        }  
     }
 
     post {
