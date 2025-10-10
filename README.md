@@ -185,21 +185,6 @@ The deployment playbook:
 | `mvn jacoco:report` | Generate code coverage report |
 | `mvn surefire-report:report` | Generate test report |
 
-## Dependencies
-
-### Runtime
-- Java 17 Standard Library
-- Swing (GUI)
-
-### Testing
-- JUnit Jupiter 5.9.3
-- JUnit Jupiter Params (parameterized tests)
-
-### Build & Quality
-- Maven Compiler Plugin 3.11.0
-- Maven Surefire Plugin 3.0.0
-- JaCoCo Maven Plugin 0.8.10
-
 ## Contributing
 
 1. Fork the repository
