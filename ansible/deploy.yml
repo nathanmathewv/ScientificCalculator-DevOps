@@ -2,7 +2,7 @@
 - name: Deploy Scientific Calculator Application
   hosts: deployment_servers
   vars:
-    docker_image: "scientific-calculator-java"
+    docker_image: "nathanmathewv/scientific-calculator-java"
     container_name: "scientific-calculator"
     container_port: 8080
     host_port: 8080
@@ -20,7 +20,7 @@
 
     - name: Pull latest Docker image
         community.docker.docker_image:
-          name: scientific-calculator-java
+          name: nathanmathewv/scientific-calculator-java
           tag: "{{ lookup('env', 'IMAGE_TAG') }}"
           source: local
 
