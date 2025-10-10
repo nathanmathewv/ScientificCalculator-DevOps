@@ -25,12 +25,10 @@ pipeline {
             }
             steps {
                 echo 'Building Java application with Maven...'
-                dir('java-calculator') {
-                    sh '''
-                        mvn --version
-                        mvn clean compile
-                    '''
-                }
+                sh '''
+                    mvn --version
+                    mvn clean compile
+                '''
             }
         }
         
@@ -42,13 +40,11 @@ pipeline {
             }
             steps {
                 echo 'Running Java tests...'
-                dir('java-calculator') {
-                    sh 'mvn test'
-                }
+                sh 'mvn test'
             }
             post {
                 always {
-                    junit 'java-calculator/target/surefire-reports/*.xml'
+                    junit 'target/surefire-reports/*.xml'
                     echo 'Java tests completed'
                 }
             }
@@ -62,9 +58,7 @@ pipeline {
             }
             steps {
                 echo 'Generating code coverage report...'
-                dir('java-calculator') {
-                    sh 'mvn jacoco:report'
-                }
+                sh 'mvn jacoco:report'
             }
             post {
                 always {
@@ -72,7 +66,7 @@ pipeline {
                         allowMissing: false,
                         alwaysLinkToLastBuild: true,
                         keepAll: true,
-                        reportDir: 'java-calculator/target/site/jacoco',
+                        reportDir: 'target/site/jacoco',
                         reportFiles: 'index.html',
                         reportName: 'JaCoCo Coverage Report'
                     ])
@@ -88,13 +82,11 @@ pipeline {
             }
             steps {
                 echo 'Packaging Java application as JAR...'
-                dir('java-calculator') {
-                    sh 'mvn package -DskipTests'
-                }
+                sh 'mvn package -DskipTests'
             }
             post {
                 success {
-                    archiveArtifacts artifacts: 'java-calculator/target/*.jar', fingerprint: true
+                    archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
                 }
             }
         }
@@ -103,10 +95,8 @@ pipeline {
             steps {
                 script {
                     echo 'Building Docker image for Java application...'
-                    dir('java-calculator') {
-                        docker.build("${DOCKER_IMAGE_JAVA}:${BUILD_NUMBER}")
-                        docker.build("${DOCKER_IMAGE_JAVA}:latest")
-                    }
+                    docker.build("${DOCKER_IMAGE_JAVA}:${BUILD_NUMBER}")
+                    docker.build("${DOCKER_IMAGE_JAVA}:latest")
                 }
             }
         }
