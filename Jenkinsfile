@@ -46,7 +46,8 @@ pipeline {
                     sh 'ansible-playbook -i ansible/inventory.ini ansible/deploy.yml'
                 }
             }
-        }  
+        }
+
     }
 
     post {
