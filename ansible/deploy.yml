@@ -19,10 +19,11 @@
       ignore_errors: yes
 
     - name: Pull latest Docker image
-      community.docker.docker_image:
-        name: scientific-calculator-java
-        tag: "{{ lookup('env','IMAGE_TAG') }}"
-        source: local
+        community.docker.docker_image:
+          name: scientific-calculator-java
+          tag: "{{ lookup('env', 'IMAGE_TAG') }}"
+          source: local
+
 
 
     - name: Run new container
