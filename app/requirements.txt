@@ -1,0 +1,27 @@
+# Scientific Calculator Requirements
+# Python 3.6+
+
+# ==================================================
+# SYSTEM REQUIREMENTS (not installable via pip)
+# ==================================================
+# tkinter - GUI library (standard library module)
+#   - macOS: brew install python-tk@3.13
+#   - Ubuntu/Debian: sudo apt-get install python3-tk
+#   - Fedora: sudo dnf install python3-tkinter
+#   - Windows: included with official Python installer
+
+# ==================================================
+# PYTHON PACKAGE REQUIREMENTS
+# ==================================================
+
+# Core dependencies - NONE (uses standard library only)
+# The calculator uses only Python standard library:
+#   - tkinter (GUI framework)
+#   - math (mathematical operations)
+
+# ==================================================
+# DEVELOPMENT & TESTING DEPENDENCIES (Optional)
+# ==================================================
+pytest>=7.0.0
+pytest-cov>=4.0.0
+unittest-xml-reporting>=3.2.0
