@@ -1,18 +1,20 @@
 version: '3.8'
 
 services:
-  java-calculator:
+  calculator:
     build:
-      context: ./java-calculator
+      context: .
       dockerfile: Dockerfile
     image: scientific-calculator-java:latest
-    container_name: calculator-java
+    container_name: scientific-calculator
     environment:
       - DISPLAY=${DISPLAY}
+      - JAVA_OPTS=-Xmx512m -Xms256m
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
     network_mode: host
     stdin_open: true
     tty: true
+    restart: always
     ports:
       - "8080:8080"

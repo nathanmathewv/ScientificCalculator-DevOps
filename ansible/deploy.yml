@@ -1,0 +1,48 @@
+---
+- name: Deploy Scientific Calculator Application
+  hosts: deployment_servers
+  become: yes
+  vars:
+    docker_image: "scientific-calculator-java"
+    container_name: "scientific-calculator"
+    container_port: 8080
+    host_port: 8080
+
+  tasks:
+    - name: Stop existing container if running
+      docker_container:
+        name: "{{ container_name }}"
+        state: absent
+      ignore_errors: yes
+
+    - name: Remove old container
+      command: docker rm -f {{ container_name }}
+      ignore_errors: yes
+
+    - name: Pull latest Docker image
+      docker_image:
+        name: "{{ docker_image }}"
+        tag: "{{ lookup('env', 'BUILD_ID') | default('latest', true) }}"
+        source: pull
+        force_source: yes
+
+    - name: Run new container
+      docker_container:
+        name: "{{ container_name }}"
+        image: "{{ docker_image }}:{{ lookup('env', 'BUILD_ID') | default('latest', true) }}"
+        state: started
+        restart_policy: always
+        ports:
+          - "{{ host_port }}:{{ container_port }}"
+        env:
+          JAVA_OPTS: "-Xmx512m -Xms256m"
+
+    - name: Wait for container to be healthy
+      wait_for:
+        port: "{{ host_port }}"
+        delay: 5
+        timeout: 60
+
+    - name: Display deployment information
+      debug:
+        msg: "Container {{ container_name }} deployed successfully on port {{ host_port }}"
