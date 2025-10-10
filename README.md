@@ -216,7 +216,3 @@ This project is for educational purposes as part of CSE 816 SPE coursework.
 
 - **GitHub**: [nathanmathewv/ScientificCalculator-DevOps](https://github.com/nathanmathewv/ScientificCalculator-DevOps)
 - **Branch**: main
-
-## Contact
-
-For questions or issues, please open an issue on GitHub.
