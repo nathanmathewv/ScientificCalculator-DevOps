@@ -46,12 +46,12 @@ pipeline {
 
     post {
         success {
-            mail to: 'chandrimanandi2004@gmail.com',
+            mail to: 'nathanmathewv@gmail.com',
                  subject: "Pipeline Success: ${currentBuild.fullDisplayName}",
                  body: "Maven + Docker + Ansible pipeline succeeded!"
         }
         failure {
-            mail to: 'chandrimanandi2004@gmail.com',
+            mail to: 'nathanmathewv@gmail.com',
                  subject: "Pipeline Failed: ${currentBuild.fullDisplayName}",
                  body: "Pipeline failed! Check Jenkins logs."
         }
