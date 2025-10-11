@@ -5,7 +5,7 @@
     docker_image: "nathanmathewv/scientific-calculator-java"
     container_name: "scientific-calculator"
     container_port: 8080
-    host_port: 8080
+    host_port: 9090
 
   tasks:
     - name: Stop existing container if running
