@@ -1,8 +1,12 @@
 # Scientific Calculator - DevOps Project
 
-A scientific calculator built with Java 17, Maven, Docker, and Jenkins CI/CD pipeline. Features comprehensive testing, code coverage, and automated deployment with Ansible.
+A scientific calculator built with Java 17, Maven, Docker, and Jenkins CI/CD pipeline. Features **both CLI and GUI modes**, comprehensive testing, code coverage, and automated deployment with Ansible.
 
 ## Features
+
+### Dual Interface Modes
+- **CLI Mode**: Command-line interface with interactive menu
+- **GUI Mode**: Graphical user interface with Swing
 
 ### Basic Operations
 - Addition, Subtraction, Multiplication, Division
@@ -15,6 +19,8 @@ A scientific calculator built with Java 17, Maven, Docker, and Jenkins CI/CD pip
 - **Power (x^y)**: Raise a number to any power
 - **Factorial (n!)**: Calculate factorial of an integer
 - **Natural Logarithm (ln)**: Calculate natural logarithm (base e)
+- **Common Logarithm (log)**: Calculate base-10 logarithm
+- **Exponential (e^x)**: Calculate e raised to power x
 
 ## Technology Stack
 
@@ -42,6 +48,8 @@ ScientificCalculator-DevOps/
 ├── src/
 │   ├── main/java/com/calculator/
 │   │   ├── Calculator.java      # Core calculator logic
+│   │   ├── CalculatorMain.java  # Main entry point (CLI/GUI selector)
+│   │   ├── CalculatorCLI.java   # Command-line interface
 │   │   └── CalculatorGUI.java   # Swing GUI
 │   └── test/java/com/calculator/
 │       └── CalculatorTest.java  # JUnit 5 tests (40+ test cases)
@@ -78,15 +86,28 @@ mvn clean package
 
 ### Run the Calculator
 
-```bash
-# Option 1: Run with Maven
-mvn exec:java -Dexec.mainClass="com.calculator.CalculatorGUI"
+When you run the calculator, you'll be prompted to choose between CLI or GUI mode:
 
-# Option 2: Run the JAR file
+```bash
+# Option 1: Run the JAR file (Recommended)
 java -jar target/scientific-calculator-1.0.0.jar
+# Then select: 1 for CLI mode, 2 for GUI mode
+
+# Option 2: Run with Maven
+mvn exec:java -Dexec.mainClass="com.calculator.CalculatorMain"
 
 # Option 3: Run compiled classes
 mvn compile
+java -cp target/classes com.calculator.CalculatorMain
+```
+
+#### Running CLI Mode Directly
+```bash
+java -cp target/classes com.calculator.CalculatorCLI
+```
+
+#### Running GUI Mode Directly
+```bash
 java -cp target/classes com.calculator.CalculatorGUI
 ```
 

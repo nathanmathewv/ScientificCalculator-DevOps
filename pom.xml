@@ -70,7 +70,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.calculator.CalculatorGUI</mainClass>
+                            <mainClass>com.calculator.CalculatorMain</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
