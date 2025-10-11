@@ -23,8 +23,8 @@ public class CalculatorMain {
         try {
             choice = scanner.nextInt();
         } catch (Exception e) {
-            System.out.println("\n✗ Invalid input! Defaulting to GUI mode.");
-            choice = 2;
+            System.out.println("\n✗ Invalid input! Exiting.");
+            choice = 3;
         }
         
         System.out.println();
@@ -41,6 +41,10 @@ public class CalculatorMain {
                 CalculatorGUI calculator = new CalculatorGUI();
                 calculator.setVisible(true);
             });
+        } else if(choice == 3){
+            // Exit on invalid input
+            System.out.println("Exiting application.");
+            scanner.close();
         } else {
             System.out.println("✗ Invalid choice! Please run again and select 1 or 2.");
             scanner.close();
