@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 public class CalculatorMain {
     // hello
+    // hi
     public static void main(String[] args) {
         System.out.println("╔════════════════════════════════════════╗");
         System.out.println("║     Scientific Calculator v1.0         ║");
